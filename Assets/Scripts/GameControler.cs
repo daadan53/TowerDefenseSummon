@@ -22,6 +22,10 @@ public class GameControler : MonoBehaviour
     [SerializeField] private TMP_Text VagueCount;
     [SerializeField] private TMP_Text limitText;
     [SerializeField] private TMP_Text summonCountText;
+    [SerializeField] private TMP_Text summon1CountText;
+    [SerializeField] private TMP_Text summon2CountText;
+    [SerializeField] private TMP_Text summon3CountText;
+    [SerializeField] private TMP_Text summon4CountText;
     [SerializeField] private GameObject particleSys;
     [SerializeField] private GameObject pauseMenu;
     public List<GameObject> SummonInGame;
@@ -39,6 +43,11 @@ public class GameControler : MonoBehaviour
     public int heroCount;
     public int heroMax;
     private bool canInstantiate;
+    public int summon1Count { get; set;} 
+    public int summon2Count;
+    public int summon3Count;
+    public int summon4Count;
+    private int totalSummonOnGame;
 
     private void Awake()
     {
@@ -64,12 +73,17 @@ public class GameControler : MonoBehaviour
         spawnEnnemies = SpawnEnnemies.Instance;
         canInstantiate = true;
         heroMax = 0;
+        totalSummonOnGame = 2;
     }
 
     // Update is called once per frame
     void Update()
     {
         summonCountText.text = "Summon : " + heroCount + "/" + heroMax;
+        summon1CountText.text = summon1Count + "/" + totalSummonOnGame;
+        summon2CountText.text = summon2Count + "/" + totalSummonOnGame;
+        summon3CountText.text = summon3Count + "/" + totalSummonOnGame;
+        summon4CountText.text = summon4Count + "/" + totalSummonOnGame;
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -92,9 +106,11 @@ public class GameControler : MonoBehaviour
         }
         else{canInstantiate = true;}
     }
+
+    //Charge les evenement à l'appui du boutton
     public void ButtonSet()
     {
-        Summon1Button.onClick.AddListener(Summon1ButtonOnClick);
+        Summon1Button.onClick.AddListener(Summon1ButtonOnClick); 
         Summon2Button.onClick.AddListener(Summon2ButtonOnClick);
         Summon3Button.onClick.AddListener(Summon3ButtonOnClick);
         Summon4Button.onClick.AddListener(Summon4ButtonOnClick);
@@ -148,8 +164,9 @@ public class GameControler : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (Summon1 && !isPause)
+            if (Summon1 && !isPause && (summon1Count < totalSummonOnGame))
             {
+                summon1Count++;
                 CastleMP -= 100;
                 var prefab = Instantiate(Summon1Prefab);
                 Vector3 mousePosition = Input.mousePosition;
@@ -163,8 +180,9 @@ public class GameControler : MonoBehaviour
 
 
             }
-            else if (Summon2 && !isPause)
+            else if (Summon2 && !isPause && (summon2Count < totalSummonOnGame))
             {
+                summon2Count++;
                 CastleMP -= 200;
                 var prefab = Instantiate(Summon2Prefab);
                 Vector3 mousePosition = Input.mousePosition;
@@ -176,8 +194,9 @@ public class GameControler : MonoBehaviour
                 heroCount++;
                 StartCoroutine(AnimPlayer());
             }
-            else if (Summon3 && !isPause)
+            else if (Summon3 && !isPause && (summon3Count < totalSummonOnGame))
             {
+                summon3Count++;
                 CastleMP -= 300;
                 var prefab = Instantiate(Summon3Prefab);
                 Vector3 mousePosition = Input.mousePosition;
@@ -189,8 +208,9 @@ public class GameControler : MonoBehaviour
                 heroCount++;
                 StartCoroutine(AnimPlayer());
             }
-            else if (Summon4 && !isPause)
+            else if (Summon4 && !isPause && (summon4Count < totalSummonOnGame))
             {
+                summon4Count++;
                 CastleMP -= 400;
                 var prefab = Instantiate(Summon4Prefab);
                 Vector3 mousePosition = Input.mousePosition;

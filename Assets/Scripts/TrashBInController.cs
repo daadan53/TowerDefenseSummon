@@ -23,6 +23,23 @@ public class TrashBinController : MonoBehaviour
             GameControler.Instance.heroCount -= 1;
             GameControler.Instance.SummonInGame.Remove(collision.gameObject);
             Destroy(collision.gameObject);
+
+            if(collision.tag == "Summon1")
+            {
+                GameControler.Instance.summon1Count--;
+            }
+            else if(collision.tag == "Summon2")
+            {
+                GameControler.Instance.summon2Count--;
+            }
+            else if(collision.tag == "Summon3")
+            {
+                GameControler.Instance.summon3Count--;
+            }
+            else if(collision.tag == "Summon4")
+            {
+                GameControler.Instance.summon4Count--;
+            }
         }
     }
 }
